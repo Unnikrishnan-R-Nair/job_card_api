@@ -1,0 +1,249 @@
+======== create Admin user ========
+
+    url: localhost:8000/api/v1/admin/
+    
+    method: post
+    data={
+        username: "",
+        email: "",
+        password1: "password",
+        password2: "confirm password" 
+    }
+
+*) to creat a user with admin privilege
+
+======= Token ========
+    url: localhost:8000/api/v1/token/
+    method: post
+    data={
+        username:"valid username",
+        password: "valid password"
+    }
+
+*) cannot get token if advisor account is inactive
+
+======service advisor ======
+
+>>>>>> create service advisor <<<<<<<
+
+    url: localhost:8000/api/v1/users/
+
+    method: post
+
+    data={
+        username:"",
+        email:"",
+        first_name: "",
+        last_name: "",
+        password1: "password",
+        password2: "confirm password",
+
+    }
+
+    authentication= Token (Admin) 
+
+
+>>>>> list all advisor <<<<<
+
+    url: localhost:8000/api/v1/users/
+
+    method: get
+
+    data: nill
+
+    authentication: Token (Admin) 
+
+
+>>>>>>> update service advisor status <<<<<<
+
+    url: localhost:8000/api/v1/user/{id}
+
+    method: put
+
+    data: {
+        first_name:"",
+        last_name:"",
+        username:""
+        is_active: true/false
+    }
+
+    authentication: Token (Admin) 
+
+
+>>>>>> delete service advisor <<<<<
+
+    url: localhost:8000/api/v1/user/{id}
+
+    method: delete
+
+    data: nill
+
+    authentication: Token (Admin) 
+
+    response: {"message": "Advisor account deactivated."}
+
+
+========== jobcard =================
+
+>>>>> creating a jobcard <<<<<<<
+
+    url: localhost:8000/api/v1/jobcards/
+
+    method: post
+
+    data={
+        customer_name: "name of customer",
+        phone:"customer phone no:",
+        email:"customer email",
+        vehicle_num: "veh no: ",
+        kilometers: ""
+        
+    }
+
+    authentication: token
+
+*) cannot create if advisor account is inactive
+
+>>>>>>> listing all jobcards <<<<<<<<<
+
+    url:localhost:8000/api/v1/jobcards/
+
+    method:get
+
+    data={}
+    authentication:token
+
+*) all jobcards will be listed.
+*) cannot list if advisor account is inactive
+
+>>>>>> retrieving a jobcard <<<<<<<
+
+    url: localhost:8000/api/v1/jobcards/{id}
+
+    method: get
+
+    data={}
+    authentication:nill
+
+*) if jobcard is cancelled then cannot list it.
+*) cannot retrieve if advisor account is inactive
+
+>>>>> updating a jobcard <<<<<<
+
+    url:localhost:8000/api/v1/jobcards/{id}/
+
+    method: put
+
+    data = {
+        cus_name: "name of customer",
+        phone:"customer phone no:",
+        email:"customer email",
+        vehicle_number: "veh no: ",
+        running_kilometers: "",
+        status: "Open/Complete
+        remark=""
+    }
+
+    authentication: Token
+
+*) if jobcard is cancelled then cannot update it.
+*) cannot update if advisor account is inactive
+
+>>>>>> delete/cancel jobcard <<<<<<
+
+    url: localhost:8000/api/v1/jobcards/{id}/
+
+    method: delete
+
+    data={}
+
+    authentication: Token
+
+    response : { "message": "Jobcard cancelled" }
+
+*) if jobcard cancelled then admin can only re-open it. (Admin Token authentication)
+*) cannot cancel if advisor account is inactive.
+
+======= jobs =========
+
+>>>> create/add job <<<<<
+
+    url:localhost:8000/api/v1/jobcard/{id}/jobs/
+
+    method: post
+
+    data={
+
+        title: "",
+        description: "give description or .",
+        amount: "",
+
+    }
+
+    authentication: Token
+
+*) can't if advisor account is inactive.
+
+>>>> list all jobs in a jobcard <<<<<
+
+    url: localhost:8000/api/v1/jobcard/{id}/jobs/
+
+    method: get
+
+    data: {}
+
+    authentication: Token
+
+*) can't if advisor account is inactive.
+
+>>>> update a job <<<<
+
+    url: localhost:8000/api/v1/jobcards/jobs/{id}
+
+    method: put
+
+    data: {
+        title:""
+        description:"give description or ."
+        amount: 
+    }
+
+    authentication: Token
+
+*) can't if advisor account is inactive.
+
+>>>>>> retrieve job <<<<<
+
+    url: localhost:8000/api/v1/jobcards/jobs/{id}
+
+    method: get
+
+    data: {}
+
+    authentication: token
+
+>>>>> delete job <<<<<
+
+    url: localhost:8000/api/v1/jobcards/jobs/{id}
+
+    method: delete
+
+    data:{}
+
+    authentication: token
+
+*) can't if advisor account is inactive.
+
+======== Jobcard summary =======    
+
+    url: localhost:8000/api/v1/jobcard/summary/{id}/
+
+    method: get 
+
+    data: {}
+
+    authentication: Token
+
+*) can't if advisor account is inactive.
+*) full summary with 'estimate amount', 'job details' and 'status' 
+*) all advisor jobcard summary
